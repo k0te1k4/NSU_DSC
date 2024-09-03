@@ -1,7 +1,5 @@
-# This is a sample Python script.
 import math
 import matplotlib.pyplot as plt
-import numpy as np
 
 
 def sin_to_taylor(x, pw):
@@ -10,24 +8,21 @@ def sin_to_taylor(x, pw):
         summ += math.pow((-1), k) * (math.pow(x, 2 * k + 1) / math.factorial(2 * k + 1))
     return summ
 
+def dots_for_plot(count,pw):
+    arr = []
+    piece = (4 * 3.14)/count # (2 * 3.14 - (-2 * 3.14))/count
+    for i in range(1, count):
+        arr.append(sin_to_taylor(-2 * 3.14 + piece * i, pw))
+    return arr
 
-def dots_for_plot():
-    arr1 = []
-    arr2 = []
-    arr3 = []
-    # for должен бегать не от 1 до 400, а от -2pi до +2pi, но чтобы было 400 шагов между ними
-    for i in range(1, 400):
-        arr1.append(sin_to_taylor(i, 1))
-    for i in range(1, 400):
-        arr2.append(sin_to_taylor(i, 3))
-    for i in range(1, 400):
-        arr3.append(sin_to_taylor(i, 7))
-    plt.plot(arr1)
-    plt.plot(arr2)
-    plt.plot(arr3)
+def show_plot(count):
+    plt.plot(dots_for_plot(count,1))
+    plt.plot(dots_for_plot(count,3))
+    plt.plot(dots_for_plot(count,7))
     plt.show()
 
 
 
 if __name__ == '__main__':
-    dots_for_plot()
+    show_plot(400)
+
